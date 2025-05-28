@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "java",
+        "name": "Launch Tests",
+        "request": "launch",
+        "mainClass": "org.testng.TestNG",    // hoặc class test chính của cậu
+        "vmArgs": "",
+        "classPaths": [
+          "bin",                             // folder chứa class đã compile
+          "lib/jcommander-1.82.jar",
+          "lib/testng.jar"                   // nếu cậu cũng dùng testng jar thủ công
+        ],
+        "args": [
+          "testng.xml"                      // hoặc file cấu hình test của cậu
+        ]
+      }
+    ]
+  }
+  
