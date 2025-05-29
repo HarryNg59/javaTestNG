@@ -2,6 +2,7 @@
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import java.time.Year;
 
 public class PersonTest {
 
@@ -13,91 +14,82 @@ public class PersonTest {
     }
 
     @Test
-    public void testDefaultConstructor() {
-        Assert.assertEquals(person.getPersonID(), 0);
+    public void testIsAdultTrue() {
+        person.setyOB(Year.now().getValue() - 18);
+        Assert.assertTrue(person.isAdult());
+    }
+
+    @Test
+    public void testIsAdultFalse() {
+        person.setyOB(Year.now().getValue() - 17);
+        Assert.assertFalse(person.isAdult());
+    }
+ @Test
+    public void testGetAge() {
+        int yob = 1990;
+        person.setyOB(yob);
+        int expectedAge = Year.now().getValue() - yob;
+        Assert.assertEquals(person.getAge(), expectedAge);
+    }
+
+    @Test
+    public void testValidEmailTrue() {
+        person.setEmail("test@example.com");
+        Assert.assertTrue(person.isValidEmail());
+    }
+
+    @Test
+    public void testValidEmailFalse() {
+        person.setEmail("invalid-email");
+        Assert.assertFalse(person.isValidEmail());
+    }
+
+    @Test public void testIsVietnamPhoneTrue() {
+        person.setPhoneNumber("+84123456789");
+        Assert.assertTrue(person.isVietnamPhone());
+    }
+
+    @Test
+    public void testIsVietnamPhoneFalse() {
+        person.setPhoneNumber("0123456789");
+        Assert.assertFalse(person.isVietnamPhone());
+    }
+
+    @Test
+    public void testIsVietnameseTrue() {
+        person.setNationality("Vietnam");
+        Assert.assertTrue(person.isVietnamese());
+    }
+
+    @Test
+    public void testIsVietnameseFalse() {
+        person.setNationality("USA");
+        Assert.assertFalse(person.isVietnamese());
+    }
+
+    @Test public void testPersonDefaultConstructor() {
+        Assert.assertNotNull(person);
         Assert.assertNull(person.getFullName());
-        Assert.assertEquals(person.getyOB(), 0);
+        Assert.assertNull(person.getEmail());
+        Assert.assertNull(person.getPhoneNumber());
         Assert.assertNull(person.getPlaceOfBirth());
         Assert.assertNull(person.getGender());
+        Assert.assertNull(person.getNationality());
+        Assert.assertEquals(person.getyOB(), 0);
+        Assert.assertEquals(person.getPersonID(), 0);
     }
 
     @Test
-    public void testParameterizedConstructor() {
-        Person newPerson = new Person(1, "John Doe", 1990, "New York", "Male");
-        Assert.assertEquals(newPerson.getPersonID(), 1);
-        Assert.assertEquals(newPerson.getFullName(), "John Doe");
-        Assert.assertEquals(newPerson.getyOB(), 1990);
-        Assert.assertEquals(newPerson.getPlaceOfBirth(), "New York");
-        Assert.assertEquals(newPerson.getGender(), "Male");
-    }
-
-    @Test public void testSetPersonID() {
-        person.setPersonID(5);
-        Assert.assertEquals(person.getPersonID(), 5);
-    }
-
-    @Test
-    public void testSetFullName() {
-        person.setFullName("Alice Wonderland");
-        Assert.assertEquals(person.getFullName(), "Alice Wonderland");
-    }
-
-    @Test
-    public void testSetyOB() {
-        person.setyOB(1985);
-        Assert.assertEquals(person.getyOB(), 1985);
-    }
-
-    @Test
-    public void testSetPlaceOfBirth() {
-        person.setPlaceOfBirth("Wonderland");
-        Assert.assertEquals(person.getPlaceOfBirth(), "Wonderland");
-    }
-
-    @Test
-    public void testSetGender() {
-        person.setGender("Female");
-        Assert.assertEquals(person.getGender(), "Female");
-    }
-
-    @Test
-    public void testNegativePersonID() {
-        person.setPersonID(-1);
-        Assert.assertEquals(person.getPersonID(), -1);
-    }
-
-    @Test public void testEmptyFullName() {
-        person.setFullName("");
-        Assert.assertEquals(person.getFullName(), "");
-    }
-
-    @Test
-    public void testLeapYearYOB() {
-        person.setyOB(2000);
-        Assert.assertEquals(person.getyOB(), 2000);
-    }
-
-    @Test
-    public void testNonLeapYearYOB() {
-        person.setyOB(1999);
-        Assert.assertEquals(person.getyOB(), 1999);
-    }
-
-    @Test
-    public void testPlaceOfBirthSpecialCharacters() {
-        person.setPlaceOfBirth("@Wonderland!");
-        Assert.assertEquals(person.getPlaceOfBirth(), "@Wonderland!");
-    }
-
-    @Test
-    public void testGenderCaseSensitivity() {
-        person.setGender("MALE");
-        Assert.assertEquals(person.getGender(), "MALE");
-    }
-
-    @Test
-    public void testNullGender() {
-        person.setGender(null);
-        Assert.assertNull(person.getGender());
+    public void testPersonAllArgsConstructor() {
+        Person person = new Person(1, "John Doe", 1990, "Hanoi", "Male", "john@example.com", "+84123456789", "Vietnam");
+        
+        Assert.assertEquals(person.getPersonID(), 1);
+        Assert.assertEquals(person.getFullName(), "John Doe");
+        Assert.assertEquals(person.getyOB(), 1990);
+        Assert.assertEquals(person.getPlaceOfBirth(), "Hanoi");
+        Assert.assertEquals(person.getGender(), "Male");
+        Assert.assertEquals(person.getEmail(), "john@example.com");
+        Assert.assertEquals(person.getPhoneNumber(), "+84123456789");
+        Assert.assertEquals(person.getNationality(), "Vietnam");
     }
 }
