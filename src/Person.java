@@ -83,14 +83,6 @@ public class Person {
         return (Year.now().getValue() - yOB);
     }
 
-    public void displayInfo() {
-        System.out.println("ID: " + personID);
-        System.out.println("Họ tên: " + fullName);
-        System.out.println("Năm sinh: " + yOB + " (Tuổi: " + getAge() + ")");
-        System.out.println("Nơi sinh: " + placeOfBirth);
-        System.out.println("Giới tính: " + gender);
-    }
-
     public boolean isValidEmail() {
         return email != null && email.matches("^[A-Za-z0-9+_.-]+@(.+)$");
     }
